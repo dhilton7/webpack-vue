@@ -29,5 +29,13 @@
 </template>
 
 <script>
-
+  export default {
+    data() {
+      return {
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }
+    }
+  }
 </script>

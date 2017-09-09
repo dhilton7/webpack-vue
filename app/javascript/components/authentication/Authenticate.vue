@@ -7,7 +7,9 @@
           </v-flex>
           <v-flex xs6>
             <v-card>
-              <router-view></router-view>
+              <login v-if="login"></login>
+              <signup v-else></signup>
+
             </v-card>
           </v-flex>
         </v-layout>
