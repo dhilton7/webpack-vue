@@ -9,7 +9,9 @@
             <v-card>
               <login v-if="login"></login>
               <signup v-else></signup>
-
+              <v-card-actions>
+                <v-btn normal @click="toggleForm">{{ toggleText }}</v-btn>
+              </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>
@@ -34,7 +36,14 @@
         password: '',
         password_confirmation: '',
         login: true,
+        toggleText: "Don't have an account?",
         valid: true
+      }
+    },
+    methods: {
+      toggleForm() {
+        this.login = !this.login;
+        this.toggleText = this.login == true ? "Don't have an account?" : "Sign in Now"
       }
     }
   }
