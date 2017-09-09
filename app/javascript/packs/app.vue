@@ -1,50 +1,56 @@
 <template>
-  <v-app id="example-1" toolbar footer>
+  <v-app
+    id="e3"
+    standalone
+    toolbar
+  >
     <v-navigation-drawer
       persistent
-      v-model="drawer"
-      light
+      clipped
       enable-resize-watcher
-      overflow
+      v-model="drawer"
     >
-    <v-list>
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>home</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <router-link to="/"><v-list-tile-title>Home</v-list-tile-title></router-link>
-        </v-list-tile-content>
-      </v-list-tile>
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>list</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <router-link to="/properties"><v-list-tile-title>Properties</v-list-tile-title></router-link>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-  </v-navigation-drawer>
-  <v-toolbar class="indigo" dark>
-    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-  <v-toolbar-title>Toolbar</v-toolbar-title>
-</v-toolbar>
-<main>
-  <v-container fluid>
-    <!--v-router-->
-    <router-view></router-view>
-  </v-container>
-</main>
-</v-app>
+      <v-list dense>
+        <v-list-tile v-for="item in items" :key="item.id">
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+          <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar class="green lighten-1">
+      <v-toolbar-title>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-icon>fa-youtube</v-icon>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>
+    <main>
+      <v-container fluid>
+        <v-layout>
+          <router-view></router-view>
+        </v-layout>
+      </v-container>
+    </main>
+  </v-app>
 </template>
 
 <script>
-export default {
-  data () {
+  export default {
+  data() {
     return {
-      drawer: true
+      drawer: true,
+      items: [
+        { id: 1, name: 'Home', icon: 'home' },
+        { id: 2, name: 'Properties', icon: 'list' }
+      ]
     }
   }
 }
 </script>
+
+<style>
+</style>
