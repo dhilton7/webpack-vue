@@ -1,50 +1,48 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <h4>Sign Up</h4>
-    </v-card-title>
-    <v-form v-model="valid">
-      <v-text-field
-        label="Email"
-        v-model="email"
-        required
-      ></v-text-field>
-
-      <v-text-field
-        label="Password"
-        v-model="password"
-        required
-      ></v-text-field>
-
-      <v-text-field
-        label="Password Confirmation"
-        v-model="password_confirmation"
-        required
-      ></v-text-field>
-    </v-form>
-    <v-card-actions>
-      <v-btn
-        medium
-        @click="signIn"
-      >Sign In</v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-app>
+    <main>
+      <v-container fluid>
+        <v-layout row wrap>
+          <v-flex xs6>
+          </v-flex>
+          <v-flex xs6>
+            <v-card>
+              <login v-if="login"></login>
+              <signup v-else></signup>
+              <v-card-actions>
+                <v-btn normal @click="toggleForm">{{ toggleText }}</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </main>
+  </v-app>
 </template>
 
 
 <script>
   import axios from 'axios'
+  import Login from './Login.vue'
+  import Signup from './Signup.vue'
 
   let token = document.getElementsByName('csrf-token')[0].getAttribute('content')
   axios.defaults.headers.common['X-CSRF-Token'] = token
   axios.defaults.headers.common['Accept'] = 'application/json'
 
+
   export default {
+    components: {
+      login: Login,
+      signup: Signup
+    },
     data() {
       return {
         email: '',
         password: '',
         password_confirmation: '',
+        login: true,
+        toggleText: "Don't have an account?",
         valid: true
       }
     },
@@ -56,11 +54,15 @@
           password_confirmation: this.password_confirmation
         })
           .then(response => {
-            console.log(response)
-          })
+          console.log(response)
+        })
           .catch(error => {
-            console.log(error)
-          })
+          console.log(error)
+        })
+      },
+      toggleForm() {
+        this.login = !this.login;
+        this.toggleText = this.login == true ? "Don't have an account?" : "Sign in Now"
       }
     }
   }
