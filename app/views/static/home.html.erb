@@ -1,1 +1,9 @@
-<div id="app"></div>
+<% if current_user.present? %>
+  <head>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+  <div id="app"></div>
+<% else %>
+  <head><%= javascript_pack_tag 'authentication' %></head>
+  <div id="authentication"></div>
+<% end %>
