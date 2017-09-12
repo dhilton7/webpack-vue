@@ -1,24 +1,9 @@
-# README
+# Webpack Vue
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Example app running vue.js along side rails served by webapck.
 
-Things you may want to cover:
+### Ruby Version
+2.4.1
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Rails Version
+5.1.3
