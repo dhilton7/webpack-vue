@@ -30,9 +30,7 @@
     </v-toolbar>
     <main>
       <v-container fluid>
-        <v-layout>
-          <router-view></router-view>
-        </v-layout>
+        <router-view></router-view>
       </v-container>
     </main>
   </v-app>
