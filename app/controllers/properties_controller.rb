@@ -1,4 +1,5 @@
 class PropertiesController < ApplicationController
+  before_action :set_property, only: %i[show update]
   respond_to :json
 
   def show
@@ -17,7 +18,19 @@ class PropertiesController < ApplicationController
     end
   end
 
+  def update
+    if @property.update(property_params)
+      render json: { payload: @property, status: :updated }
+    else
+      render json: { error: @property.errors.messages.join(', ') }, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def set_property
+    @property = Property.find params[:id]
+  end
 
   def property_params
     params.require(:property).permit(:address, :city, :state, :zip, :status, :notes)

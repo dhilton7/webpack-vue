@@ -1,9 +1,5 @@
 <template>
-  <v-app
-    id="e3"
-    standalone
-    toolbar
-  >
+  <div>
     <v-navigation-drawer
       persistent
       clipped
@@ -12,12 +8,12 @@
     >
       <v-list dense>
         <v-list-tile v-for="(item, index) in items" :key="index" :to="item.route">
-        <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.name }}</v-list-tile-title>
-        </v-list-tile-content>
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+          </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
@@ -28,17 +24,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
-
-    <main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
-    </main>
-  </v-app>
+  </div>
 </template>
 
 <script>
-
   export default {
     data() {
       return {
@@ -48,9 +37,11 @@
           { id: 2, name: 'Properties', icon: 'list', route: '/properties' }
         ]
       }
+    },
+    methods: {
+      doWork() {
+        console.log('do it')
+      }
     }
   }
 </script>
-
-<style>
-</style>

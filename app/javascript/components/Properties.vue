@@ -1,7 +1,10 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12>
-      <h3>Properties</h3>
+    <v-flex xs12 pt-4 pb-4>
+      <h3 style="display: inline;">Properties</h3>
+      <v-btn rounded small absolute right @click="showAddForm">
+        <v-icon>add</v-icon>
+      </v-btn>
     </v-flex>
     <v-flex
       offset-xs3
@@ -11,55 +14,42 @@
       v-if="addForm"
     >
       <v-card>
-        <v-card-title>Add New Property</v-card-title>
+        <v-card-title>
+          <h5 style="display: inline">{{ formAction }}</h5>
+          <v-btn fab small absolute right top style="margin-right: -35px" @click="hideAddForm">
+            <v-icon>delete</v-icon>
+          </v-btn>
+        </v-card-title>
         <v-card-text>
-          <v-text-field
-            label="Address"
-            v-model="address"
-          >
+          <v-text-field label="Address" v-model="address">
           </v-text-field>
-          <v-text-field
-            label="City"
-            v-model="city"
-          >
+          <v-text-field label="City" v-model="city">
           </v-text-field>
-          <v-text-field
-            label="State"
-            v-model="state"
-          >
+          <v-text-field label="State" v-model="state">
           </v-text-field>
-          <v-text-field
-            label="ZIPCode"
-            v-model="zip"
-          >
+          <v-text-field label="ZIPCode" v-model="zip">
           </v-text-field>
         </v-card-text>
         <v-card-actions>
-          <v-btn
-            primary
-            @click="createProperty"
-          >Add Property</v-btn>
+          <v-btn secondary v-if="editing" @click="editProperty">Edit Property</v-btn>
+          <v-btn primary v-else @click="createProperty">Add Property</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
-    <v-flex xs3>
-      <v-btn
-        fab
-        top
-        right
-        @click="addForm = !addForm"
-      >
-        <v-icon>{{ buttonState }}</v-icon>
-      </v-btn>
-      </v-flex>
-      <p>Listing {{ count }} properties</p>
-      <v-flex xs3>
-        <v-card v-for="property in properties" :key="property.id">
-          <v-card-title>{{ property.address }}</v-card-title>
-          <v-card-text>{{ property.notes }}</v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <v-flex xs4 v-for="property in properties" :key="property.id">
+      <v-card>
+        <v-card-text pl-3>
+          <p><h6>{{ property.address }}</h6></p>
+          </v-btn>
+          <p>{{ property.city + ', ' + property.state + ' ' + property.zip }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="showEditForm(property)">Edit</v-btn>
+          <v-btn @click="showDetails(property)">Details</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -74,20 +64,33 @@
       return {
         message: 'Properties',
         addForm: false,
+        editing: false,
         address: '',
         count: 0,
         city: '',
         state: '',
         zip: '',
-        properties: []
+        properties: [],
+        editingPropertyId: 0
       }
     },
     computed: {
       buttonState() {
         return this.addForm == false ? 'add' : 'delete'
+      },
+      formAction() {
+        return this.editing ? 'Edit Property' : 'Add New Property'
       }
     },
     methods: {
+      editProperty() {
+        axios.patch(`/properties/${this.editingPropertyId}.json`, {
+          address: this.address,
+          city: this.city,
+          state: this.state,
+          zip: this.zip
+        })
+      },
       getProperties() {
         var self = this
         axios.get('/properties.json')
@@ -107,10 +110,33 @@
           state: this.state,
           zip: this.zip
         }).then(function(response) {
-          console.log(response.data.payload)
           self.properties.push(response.data.payload)
         })
-      }
+      },
+      hideAddForm() {
+        this.addForm = false
+        this.editing = false
+      },
+      showEditForm(property) {
+        this.addForm = true
+        this.editing = true
+        this.editingPropertyId = property.id
+        this.address = property.address
+        this.city = property.city
+        this.state = property.state
+        this.zip = property.zip
+      },
+      showAddForm() {
+        this.addForm = true
+        this.editing = false
+        this.editingPropertyId = null
+        this.address = null
+        this.city = null
+        this.state = null
+        this.zip = null
+      },
+    // todo: define
+      showDetails() {}
     },
     created() {
       this.getProperties()
