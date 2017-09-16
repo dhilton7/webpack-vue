@@ -10,7 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913002012) do
+ActiveRecord::Schema.define(version: 20170916184903) do
+
+  create_table "entries", force: :cascade do |t|
+    t.integer "amount"
+    t.string "account"
+    t.string "description"
+    t.boolean "paid"
+    t.date "date"
+    t.integer "property_id"
+    t.integer "entry_category_id"
+    t.integer "sheet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_category_id"], name: "index_entries_on_entry_category_id"
+    t.index ["property_id"], name: "index_entries_on_property_id"
+    t.index ["sheet_id"], name: "index_entries_on_sheet_id"
+  end
+
+  create_table "entry_categories", force: :cascade do |t|
+    t.string "name"
+    t.boolean "debt"
+    t.boolean "operating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "properties", force: :cascade do |t|
     t.string "address"
@@ -23,6 +47,16 @@ ActiveRecord::Schema.define(version: 20170913002012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_properties_on_user_id"
+  end
+
+  create_table "sheets", force: :cascade do |t|
+    t.string "title"
+    t.integer "year"
+    t.boolean "display"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sheets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
