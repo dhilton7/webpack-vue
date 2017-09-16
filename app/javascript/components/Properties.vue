@@ -7,9 +7,8 @@
       </v-btn>
     </v-flex>
     <v-flex
-      offset-xs3
-      xs6
-      row
+      offset-xs2
+      xs8
       mb-3
       v-if="addForm"
     >
@@ -21,22 +20,21 @@
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-text-field label="Address" v-model="address">
-          </v-text-field>
-          <v-text-field label="City" v-model="city">
-          </v-text-field>
-          <v-text-field label="State" v-model="state">
-          </v-text-field>
-          <v-text-field label="ZIPCode" v-model="zip">
-          </v-text-field>
+          <v-text-field label="Address" v-model="address"/>
+          <v-text-field label="City" v-model="city"/>
+          <v-text-field label="State" v-model="state"/>
+          <v-text-field label="ZIPCode" v-model="zip"/>
         </v-card-text>
         <v-card-actions>
-          <v-btn secondary v-if="editing" @click="editProperty">Edit Property</v-btn>
+          <div v-if="editing">
+            <v-btn secondary @click="editProperty">Edit Property</v-btn>
+            <v-btn @click="deleteProperty">Delete</v-btn>
+          </div>
           <v-btn primary v-else @click="createProperty">Add Property</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
-    <v-flex xs4 v-for="property in properties" :key="property.id">
+    <v-flex xs4 v-for="(property, index) in properties" :key="property.id">
       <v-card>
         <v-card-text pl-3>
           <p><h6>{{ property.address }}</h6></p>
@@ -44,7 +42,7 @@
           <p>{{ property.city + ', ' + property.state + ' ' + property.zip }}</p>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="showEditForm(property)">Edit</v-btn>
+          <v-btn @click="showEditForm(property, index)">Edit</v-btn>
           <v-btn @click="showDetails(property)">Details</v-btn>
         </v-card-actions>
       </v-card>
@@ -71,7 +69,8 @@
         state: '',
         zip: '',
         properties: [],
-        editingPropertyId: 0
+        editingPropertyId: 0,
+        editingPropertyIndex: null
       }
     },
     computed: {
@@ -84,15 +83,19 @@
     },
     methods: {
       editProperty() {
+        const self = this
         axios.patch(`/properties/${this.editingPropertyId}.json`, {
           address: this.address,
           city: this.city,
           state: this.state,
           zip: this.zip
+        }).then(function(response) {
+          self.properties[self.editingPropertyIndex] = response.data.payload
+          self.addForm = false
         })
       },
       getProperties() {
-        var self = this
+        const self = this
         axios.get('/properties.json')
           .then(function(response) {
             self.properties = response.data.payload.properties
@@ -113,14 +116,22 @@
           self.properties.push(response.data.payload)
         })
       },
+      deleteProperty() {
+        const self = this
+        axios.delete(`/properties/${this.editingPropertyId}.json`).then(function() {
+          self.hideAddForm();
+          self.properties.splice(self.editingPropertyIndex, 0);
+        })
+      },
       hideAddForm() {
         this.addForm = false
         this.editing = false
       },
-      showEditForm(property) {
+      showEditForm(property, index) {
         this.addForm = true
         this.editing = true
         this.editingPropertyId = property.id
+        this.editingPropertyIndex = index
         this.address = property.address
         this.city = property.city
         this.state = property.state

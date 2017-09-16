@@ -7,14 +7,20 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+// CSS
 import('../../../node_modules/vuetify/dist/vuetify.min.css')
+
+// Libraries
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
-import App from './app.vue'
 import Vuetify from 'vuetify'
+
+// Components
+import App from './app.vue'
 import Dashboard from '../components/Dashboard.vue'
 import Properties from '../components/Properties.vue'
+import Financials from '../components/financials/Financials.vue'
 
 
 Vue.use(Vuetify)
@@ -23,7 +29,8 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', component: Dashboard },
-  { path: '/properties', component: Properties }
+  { path: '/properties', component: Properties },
+  { path: '/financials', component: Financials }
 ]
 
 const store = new Vuex.Store({

@@ -30,7 +30,7 @@
     </v-toolbar>
 
     <main>
-      <v-container fluid>
+      <v-container fluid grid-list-md>
         <router-view></router-view>
       </v-container>
     </main>
@@ -45,7 +45,8 @@
         drawer: true,
         items: [
           { id: 1, name: 'Home', icon: 'home', route: '/' },
-          { id: 2, name: 'Properties', icon: 'list', route: '/properties' }
+          { id: 2, name: 'Properties', icon: 'view_list', route: '/properties' },
+          { id: 3, name: 'Financials', icon: 'attach_money', route: '/financials'}
         ]
       }
     }

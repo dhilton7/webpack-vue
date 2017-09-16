@@ -1,5 +1,5 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: %i[show update]
+  before_action :set_property, only: %i[show update destroy]
   respond_to :json
 
   def show
@@ -24,6 +24,11 @@ class PropertiesController < ApplicationController
     else
       render json: { error: @property.errors.messages.join(', ') }, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @property.destroy
+    render json: { success: true, status: :deleted }
   end
 
   private
