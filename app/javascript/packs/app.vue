@@ -11,7 +11,7 @@
       v-model="drawer"
     >
       <v-list dense>
-        <v-list-tile v-for="(item, index) in items" :key="index" :to="item.route">
+        <v-list-tile v-for="(item, index) in items" :key="index" :to="item.route" @click="drawer = false">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
