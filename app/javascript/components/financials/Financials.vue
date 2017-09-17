@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs6 pa-4>
-      <h3 style="display=inline;">Financial Sheets</h3>
+      <h3 style="display=inline;">Financial Statements</h3>
     </v-flex>
     <v-flex xs4 offset-xs1>
       <v-btn fab absolute right @click="displayForm = !displayForm">
@@ -43,7 +43,7 @@
     },
     computed: {
       displayCTA() {
-        return this.displayForm == true ? 'delete' : 'add'
+        return this.displayForm == true ? 'clear' : 'add'
       }
     },
     methods: {

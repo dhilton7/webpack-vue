@@ -75,7 +75,7 @@
     },
     computed: {
       buttonState() {
-        return this.addForm == false ? 'add' : 'delete'
+        return this.addForm == false ? 'add' : 'clear'
       },
       formAction() {
         return this.editing ? 'Edit Property' : 'Add New Property'

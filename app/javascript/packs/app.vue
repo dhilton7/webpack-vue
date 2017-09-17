@@ -44,9 +44,10 @@
       return {
         drawer: true,
         items: [
-          { id: 1, name: 'Home', icon: 'home', route: '/' },
+          { id: 1, name: 'Home', icon: 'home', route: '/home' },
           { id: 2, name: 'Properties', icon: 'view_list', route: '/properties' },
-          { id: 3, name: 'Financials', icon: 'attach_money', route: '/financials'}
+          { id: 3, name: 'Financials', icon: 'attach_money', route: '/financials'},
+          { id: 4, name: 'Analyze', icon: 'insert_chart', route: '/analyze' }
         ]
       }
     }
