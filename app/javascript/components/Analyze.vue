@@ -1,14 +1,13 @@
 <template>
 	<v-layout row wrap pa-4>
-    <v-flex xs12>
-      <h3 style="display: inline">Analyze Property Now</h3>
-       <v-btn primary large @click="runAnalysis">Analyze</v-btn>
+    <v-flex xs12 pb-4>
+      <h3 class="display-2" style="display: inline">Analyze Property Now</h3>
     </v-flex>
     <v-flex xs12 md8>
       <v-layout row wrap>
         <v-flex xs12 md6>
           <v-card>
-            <v-card-title>Property Information</v-card-title>
+            <v-card-title class="title">Property Information</v-card-title>
             <v-card-text>
               <v-layout>
                 <v-flex row xs5>
@@ -57,7 +56,7 @@
         </v-flex>
         <v-flex xs12 md6>
           <v-card>
-            <v-card-title>Income & Expenses</v-card-title>
+            <v-card-title class="title">Income & Expenses</v-card-title>
             <v-card-text>
               <v-layout row wrap>
                 <v-flex xs5>
@@ -105,10 +104,10 @@
     </v-flex>
     <v-flex xs12 md4 v-if="displayResults">
       <v-card>
-        <v-card-title>Results</v-card-title>
+        <v-card-title class="title">Results</v-card-title>
         <v-card-text>
-          <p v-for="result in resultSet">
-            <strong>{{ result.name }}:</strong> ${{ resultsFor(result.name) }}
+          <p v-for="(result, index) in resultSet" :key="index">
+            <strong>{{ result }}:</strong> <span class="right">{{ resultsFor(result) }}</span>
           </p>
         </v-card-text>
       </v-card>
@@ -140,18 +139,18 @@
         capex: null,
         propertyManagement: null,
         resultSet: [
-          { id: 1, name: 'Monthly P&I' },
-          { id: 2, name: 'Total Monthly Payment' },
-          { id: 3, name: 'Vacancy Expense' },
-          { id: 4, name: 'Repairs & Maintenance' },
-          { id: 5, name: 'CapEx' },
-          { id: 6, name: 'Management Expense' },
-          { id: 7, name: 'Operating Expense' },
-          { id: 8, name: 'Total Income'},
-          { id: 9, name: 'Net Operating Income' },
-          { id: 10, name: 'Cash on Cash' },
-          { id: 11, name: 'ROI' },
-          { id: 12, name: 'Cap Rate' }
+          'Monthly P&I',
+          'Total Monthly Payment',
+          'Vacancy Expense',
+          'Repairs & Maintenance',
+          'CapEx',
+          'Management Expense',
+          'Operating Expense',
+          'Total Income',
+          'Net Operating Income',
+          'Cash Flow',
+          'Cash on Cash ROI',
+          'Cap Rate'
         ]
       }
     },
@@ -179,14 +178,34 @@
       pmExpense() {
         return (this.rent * (this.propertyManagement) / 100.00).toFixed(2)
       },
-      totalMonthlyPayment() {
-        // this is doing string concat... need to fix
-        return parseFloat(this.monthlyPayment) + parseFloat(this.insurance) + parseFloat(this.propertyTax)
+      operatingExpense() {
+        return (Number(this.pmExpense) + Number(this.vacancyExpense) + Number(this.capExCost) + Number(this.pmExpense)).toFixed(2)
       },
-      // downPaymentValue() {
-      //   if (this.downPayment != null ) { return this.downPayment }
-      //   return (this.percentDown != null && this.purchasePrice != null) ? (this.percentDown * this.purchasePrice / 100.00) : null
-      // }
+      totalMonthlyPayment() {
+        return (Number(this.monthlyPayment) + Number(this.insurance) + Number(this.propertyTax)).toFixed(2)
+      },
+      totalExpense() {
+        return Number(this.totalMonthlyPayment) + Number(this.operatingExpense)
+      },
+      operatingIncome() {
+        return this.rent
+      },
+      totalIncome() {
+        return this.rent // + this.otherIncome
+      },
+      netOperatingIncome() {
+        return Number(this.operatingIncome) - Number(this.operatingExpense)
+      },
+      cashFlow() {
+        return (Number(this.operatingIncome) - Number(this.totalExpense)).toFixed(2)
+      },
+      // TODO: need to include closing costs here.
+      roi() {
+        return (Number(this.cashFlow) * 12 * 100.00 / this.downPayment).toFixed(2)
+      },
+      capRate() {
+        return (this.netOperatingIncome * 12 * 100.000 / this.purchasePrice).toFixed(3)
+      }
     },
     watch: {
       percentDown(value) {
@@ -200,42 +219,42 @@
       }
     },
     methods: {
-      runAnalysis() {
-      },
       monthlyInterest() {
         return this.interestRate / (100.00 * 12)
-      },
-      updateDownPaymentFields() {
-
       },
       setLoanAmount() {
         this.loanAmount = this.purchasePrice - this.downPayment
       },
       resultsFor(name) {
         switch(name) {
-          case this.resultSet[0].name:
-            return this.monthlyPayment
-          case this.resultSet[1].name:
-            return this.totalMonthlyPayment
-          case this.resultSet[2].name:
-            return this.vacancyExpense
-          case this.resultSet[3].name:
-            return this.repairsExpense
-          case this.resultSet[4].name:
-            return this.capExCost
-          case this.resultSet[5].name:
-            return this.pmExpense
-          case this.resultSet[6].name:
-          case this.resultSet[7].name:
-          case this.resultSet[8].name:
-          case this.resultSet[9].name:
-          case this.resultSet[10].name:
-          case this.resultSet[11].name:
-          case this.resultSet[12].name:
+          case this.resultSet[0]:
+            return `$${this.monthlyPayment}`
+          case this.resultSet[1]:
+            return `$${this.totalMonthlyPayment}`
+          case this.resultSet[2]:
+            return `$${this.vacancyExpense}`
+          case this.resultSet[3]:
+            return `$${this.repairsExpense}`
+          case this.resultSet[4]:
+            return `$${this.capExCost}`
+          case this.resultSet[5]:
+            return `$${this.pmExpense}`
+          case this.resultSet[6]:
+            return `$${this.operatingExpense}`
+          case this.resultSet[7]:
+            return `$${this.totalIncome}`
+          case this.resultSet[8]:
+            return `$${this.netOperatingIncome}`
+          case this.resultSet[9]:
+            return `$${this.cashFlow}`
+          case this.resultSet[10]:
+            return `${this.roi}%`
+          case this.resultSet[11]:
+            return `${this.capRate}%`
           default:
             return ''
         }
-      }
+      },
     }
   }
 </script>
