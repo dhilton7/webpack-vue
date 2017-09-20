@@ -21,7 +21,9 @@
     </v-flex>
     <v-flex xs12 pr-4 pl-4 v-for="sheet in sheets" :key="sheet.id">
       <v-card>
-        <v-card-text>{{ sheet.title }} {{ sheet.year }}</v-card-text>
+        <v-card-text>
+          <router-link :to="`financials/${sheet.id}`">{{ sheet.title }} {{ sheet.year }}</router-link>
+        </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>

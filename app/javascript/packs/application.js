@@ -22,6 +22,7 @@ import Analyze from '../components/Analyze.vue'
 import Dashboard from '../components/Dashboard.vue'
 import Properties from '../components/Properties.vue'
 import Financials from '../components/financials/Financials.vue'
+import FinancialDetails from '../components/financials/Details.vue'
 
 
 Vue.use(Vuetify)
@@ -32,7 +33,8 @@ const routes = [
   { path: '/home', component: Dashboard },
   { path: '/properties', component: Properties },
   { path: '/financials', component: Financials },
-  { path: '/analyze', component: Analyze }
+  { path: '/analyze', component: Analyze },
+  { path: '/financials/:id', component: FinancialDetails }
 ]
 
 const store = new Vuex.Store({
