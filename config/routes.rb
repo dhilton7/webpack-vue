@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :users
   resources :properties
   resources :sheets
+  resources :entry_categories, only: [:index]
 end

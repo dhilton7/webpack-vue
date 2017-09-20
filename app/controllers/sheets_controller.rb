@@ -11,6 +11,7 @@ class SheetsController < ApplicationController
   end
 
   def show
+    render json: { payload: @sheet }
   end
 
   def index
