@@ -1,6 +1,6 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs6 pa-4>
+  <v-layout row wrap pa-4>
+    <v-flex xs6>
       <h3 style="display=inline;">Financial Statements</h3>
     </v-flex>
     <v-flex xs4 offset-xs1>
@@ -19,7 +19,7 @@
         </v-card-actions>
       </v-card>
     </v-flex>
-    <v-flex xs12 pr-4 pl-4 v-for="sheet in sheets" :key="sheet.id">
+    <v-flex xs12 v-for="sheet in sheets" :key="sheet.id">
       <v-card>
         <v-card-text>
           <router-link :to="`financials/${sheet.id}`">{{ sheet.title }} {{ sheet.year }}</router-link>

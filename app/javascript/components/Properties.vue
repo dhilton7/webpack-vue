@@ -1,8 +1,8 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12 pa-4>
+  <v-layout row wrap pa-4>
+    <v-flex xs12 pb-4>
       <h3 style="display: inline;">Properties</h3>
-      <v-btn rounded small absolute right @click="showAddForm">
+      <v-btn rounded small absolute @click="showAddForm">
         <v-icon>add</v-icon>
       </v-btn>
     </v-flex>
