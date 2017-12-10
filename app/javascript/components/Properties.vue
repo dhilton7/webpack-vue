@@ -120,7 +120,7 @@
         const self = this
         axios.delete(`/properties/${this.editingPropertyId}.json`).then(function() {
           self.hideAddForm();
-          self.properties.splice(self.editingPropertyIndex, 0);
+          self.properties.splice(self.editingPropertyIndex, 1);
         })
       },
       hideAddForm() {
