@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :properties
-  resources :sheets
+  resources :sheets do
+    resources :entries, only: [:create]
+  end
+
   resources :entry_categories, only: [:index]
 end

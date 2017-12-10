@@ -1,18 +1,18 @@
 class PropertiesController < ApplicationController
   before_action :set_property, only: %i[show update destroy]
-  respond_to :json
 
   def show
   end
 
   def index
     @properties = current_user.properties
+    render json: { properties: @properties.map { |p| { text: p.address_string, value: p.id }}} if params[:address_only]
   end
 
   def create
     @property = Property.new property_params.merge!(user_id: current_user.id)
     if @property.save
-      render json: { payload: @property.to_builder, status: :created }
+      render json: { payload: @property.to_builder.target!, status: :created }
     else
       render json: { error: @property.errors.messages.join(', ') }, status: :unprocessable_entity
     end

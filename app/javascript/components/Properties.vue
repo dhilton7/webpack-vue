@@ -113,7 +113,7 @@
           state: this.state,
           zip: this.zip
         }).then(function(response) {
-          self.properties.push(response.data.payload)
+          self.properties.push(JSON.parse(response.data.payload))
         })
       },
       deleteProperty() {

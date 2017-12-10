@@ -6,9 +6,6 @@ class Property < ActiveRecord::Base
   end
 
   def to_builder
-    Jbuilder.new do |property|
-      property.(self, :address, :city, :state, :zip, :status, :notes)
-    end
+    Jbuilder.new { |property| property.(self, :address, :city, :state, :zip, :status, :notes)}
   end
-
 end
