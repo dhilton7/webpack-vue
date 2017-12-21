@@ -1,7 +1,12 @@
 <template>
   <v-layout row wrap pa-4>
-    <v-flex xs12>
+    <v-flex xs9>
       <h3>{{ sheetTitle }}</h3>
+    </v-flex>
+    <v-flex xs1 offset-xs2>
+      <router-link to="/financials">
+        <v-icon>arrow_back</v-icon>
+      </router-link>
     </v-flex>
     <v-flex xs12>
       <v-card>
@@ -69,7 +74,14 @@
             </v-card-title>
           </v-card>
         </v-flex>
-        <v-flex xs2 offset-xs2>
+        <v-flex xs2 offset-xs2 v-if="entry.debit">
+          <v-card>
+            <v-card-title>
+              <span class="headline">{{ entry.amount }}</span>
+            </v-card-title>
+          </v-card>
+        </v-flex>
+        <v-flex xs2 v-else>
           <v-card>
             <v-card-title>
               <span class="headline">{{ entry.amount }}</span>
@@ -124,7 +136,7 @@
     },
     computed: {
       sheetTitle() {
-        return `${this.sheetInfo.title} ${this.sheetInfo.year}`
+        return `${this.sheetInfo.title || ''} ${this.sheetInfo.year || ''}`
       }
     },
     created() {

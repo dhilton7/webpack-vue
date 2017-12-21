@@ -10,4 +10,8 @@ class Entry < ActiveRecord::Base
   def category_name
     self[:category_name] || entry_category.name
   end
+
+  def debit
+    self[:debit] || entry_category.debt
+  end
 end
