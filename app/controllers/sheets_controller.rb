@@ -1,5 +1,5 @@
 class SheetsController < ApplicationController
-  before_action :set_sheet, only: %i[show update destroy]
+  before_action :set_sheet, only: %i[edit update destroy]
 
   def create
     @sheet = current_user.sheets.new sheet_params
@@ -11,7 +11,7 @@ class SheetsController < ApplicationController
   end
 
   def show
-    render json: { payload: @sheet }
+    @sheet = Sheet.find params[:id] #Sheet.details_for(params[:id])
   end
 
   def index

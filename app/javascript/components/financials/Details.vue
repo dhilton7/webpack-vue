@@ -57,11 +57,36 @@
         </v-card-text>
       </v-card>
     </v-flex>
+    <v-flex xs12 v-for="(entry, index) in sheetInfo.entries" :key="entry.id">
+      <v-layout row>
+        <v-flex xs8>
+          <v-card>
+            <v-card-title>
+              <div>
+                <h5 class="headline mb-0">{{ entry.category_name }}</h5>
+                <p>{{ entry.address }}</p>
+              </div>
+            </v-card-title>
+          </v-card>
+        </v-flex>
+        <v-flex xs2 offset-xs2>
+          <v-card>
+            <v-card-title>
+              <span class="headline">{{ entry.amount }}</span>
+            </v-card-title>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-flex>
   </v-layout>
 </template>
 
 <script>
   import axios from 'axios'
+
+  let token = document.getElementsByName('csrf-token')[0].getAttribute('content')
+  axios.defaults.headers.common['X-CSRF-Token'] = token
+  axios.defaults.headers.common['Accept'] = 'application/json'
 
 	export default {
     data() {
@@ -106,6 +131,7 @@
       const self = this
       axios.get(`/sheets/${this.$route.params.id}.json`).then((response) => {
         self.sheetInfo = response.data.payload
+        console.log(response.data.payload)
         // TODO: get response and display pertinent information
       });
 
