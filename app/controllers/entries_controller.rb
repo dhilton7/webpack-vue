@@ -3,11 +3,7 @@ class EntriesController < ApplicationController
 
   def create
     @entry = @sheet.entries.new entry_params
-    if @entry.save
-      render json: { payload: @entry }
-    else
-      render json: { error: @entry.errors.messages }
-    end
+    render json: { error: @entry.errors.messages } unless @entry.save
   end
 
   private

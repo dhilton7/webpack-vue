@@ -144,6 +144,9 @@
           date: this.entryDate,
           property_id: this.property,
           entry_category_id: this.category,
+        }).then((response) => {
+          console.log(response)
+          this.sheetInfo.entries.unshift(response.data.payload)
         })
       }
     },
