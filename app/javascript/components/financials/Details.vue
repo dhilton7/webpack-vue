@@ -8,6 +8,16 @@
         <v-icon>arrow_back</v-icon>
       </router-link>
     </v-flex>
+    <v-flex xs4 lg3 v-for="(header, index) in sheetInfo.headers" :key="header.id">
+      <v-card>
+        <v-card-text>
+          <div class="text-xs-center">
+            <div class="headline">{{ header.name }}</div>
+            <div class="display-1">{{ header.value }}</div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-flex>
     <v-flex xs12>
       <v-card>
         <v-card-text>
@@ -143,17 +153,9 @@
       const self = this
       axios.get(`/sheets/${this.$route.params.id}.json`).then((response) => {
         self.sheetInfo = response.data.payload
-        console.log(response.data.payload)
-        // TODO: get response and display pertinent information
+        self.categories = response.data.categories
+        self.properties = response.data.properties
       });
-
-      axios.get('/entry_categories.json').then((response) => {
-        self.categories = response.data.payload
-      })
-
-      axios.get('/properties?address_only=true.json').then((response) => {
-        self.properties = response.data.properties 
-      })
     }
   }
 </script>
