@@ -13,6 +13,8 @@ class SheetsController < ApplicationController
   def show
     @sheet = Sheet.find params[:id]
     @entries = Entry.entries_for_sheet params[:id]
+    @categories = EntryCategory.all_select
+    @properties = current_user.properties.select('id, address, city, state, zip')
     # TODO: Make this data driven
     @headers = [
       { name: 'Income', value: '$4000' },
