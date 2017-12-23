@@ -4,6 +4,7 @@
       <h3>{{ sheetTitle }}</h3>
     </v-flex>
     <v-flex xs1 offset-xs2>
+      <v-btn icon @click="isEditing = true"><v-icon>add_box</v-icon></v-btn>
       <router-link to="/financials">
         <v-icon>arrow_back</v-icon>
       </router-link>
@@ -18,7 +19,7 @@
         </v-card-text>
       </v-card>
     </v-flex>
-    <v-flex xs12>
+    <v-flex xs12 v-if="isEditing">
       <v-card>
         <v-card-text>
           <v-layout row>
@@ -67,6 +68,7 @@
                 multi-line
               ></v-text-field>
               <v-btn primary @click="saveEntry">Save Entry</v-btn>
+              <v-btn color="grey lighten-2" @click="isEditing = false">Cancel</v-btn>
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -121,6 +123,7 @@
         notes: '',
         paid: false,
         dateMenu: false,
+        isEditing: false,
         categories: [],
         properties: [],
         sheetInfo: {},
