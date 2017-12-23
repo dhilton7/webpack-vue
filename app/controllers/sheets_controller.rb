@@ -11,7 +11,15 @@ class SheetsController < ApplicationController
   end
 
   def show
-    @sheet = Sheet.find params[:id] #Sheet.details_for(params[:id])
+    @sheet = Sheet.find params[:id]
+    @entries = Entry.entries_for_sheet params[:id]
+    # TODO: Make this data driven
+    @headers = [
+      { name: 'Income', value: '$4000' },
+      { name: 'Expenses', value: '$1600' },
+      { name: 'Cashflow', value: '$2400' },
+      { name: 'ROI', value: '12%' },
+    ]
   end
 
   def index
