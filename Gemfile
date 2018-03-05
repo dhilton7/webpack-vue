@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7 '
 
 group :production do
-  gem 'pg'
+  gem 'pg', '1.0.0'
 end
 
 gem 'figaro', '~> 1.1.1'
