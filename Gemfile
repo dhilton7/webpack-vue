@@ -20,7 +20,7 @@ gem 'webpacker'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'coffee-rails', '~> 4.2.2'
-gem 'devise'
+gem 'devise', git: 'https://github.com/plataformatec/devise.git', branch: 'master'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
