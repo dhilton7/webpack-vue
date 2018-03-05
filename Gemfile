@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', github: 'rails/rails'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -48,10 +48,10 @@ group :development, :test do
 
   gem 'rspec-rails', '~> 3.6'
   gem 'selenium-webdriver'
-  gem 'sqlite3'
 end
 
 group :development do
+  gem 'pg', '~> 1.0.0'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
