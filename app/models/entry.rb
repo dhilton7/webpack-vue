@@ -3,14 +3,20 @@ class Entry < ActiveRecord::Base
   belongs_to :property
   belongs_to :sheet
 
-  validates :amount, :account, :paid, :date, presence: true 
+  validates :amount, :account, :paid, :date, presence: true
 
   delegate :address_string, to: :property
 
   def self.entries_for_sheet(sheet_id)
     Entry.joins(:entry_category, :property).where(sheet_id: sheet_id)
-         .select('entries.*, entry_categories.name category_name, entry_categories.debt debit, properties.address')
-         .order('entries.created_at desc')
+    .select('entries.*, entry_categories.name category_name, entry_categories.debt debit, properties.address')
+       .order('entries.created_at desc')
+  end
+
+  def self.for_property(property_id)
+    self.joins(:entry_category).where(property_id: property_id)
+    .select('entries.*, entry_categories.name category_name, entry_categories.debt debit')
+    .order('entries.created_at desc')
   end
 
   def category_name

@@ -9,16 +9,6 @@
         <v-icon>arrow_back</v-icon>
       </router-link>
     </v-flex>
-    <v-flex xs4 lg3 v-for="(header, index) in sheetInfo.headers" :key="header.id">
-      <v-card>
-        <v-card-text>
-          <div class="text-xs-center">
-            <div class="headline">{{ header.name }}</div>
-            <div class="display-1">{{ header.value }}</div>
-          </div>
-        </v-card-text>
-      </v-card>
-    </v-flex>
     <v-flex xs12 v-if="isEditing">
       <v-card>
         <v-card-text>
@@ -74,31 +64,37 @@
         </v-card-text>
       </v-card>
     </v-flex>
+    <v-flex xs4 lg2 v-for="(header, index) in sheetInfo.headers" :key="header.id">
+      <v-card>
+        <v-card-text>
+          <div class="text-xs-center">
+            <div class="headline">{{ header.name }}</div>
+            <div class="display-1">{{ header.value }}</div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-flex>
     <v-flex xs12 v-for="(entry, index) in sheetInfo.entries" :key="entry.id">
       <v-layout row>
         <v-flex xs8>
           <v-card>
             <v-card-title>
               <div>
-                <h5 class="headline mb-0">{{ entry.category_name }}</h5>
-                <p>{{ entry.address }}</p>
+                <h5 class="headline mb-0">{{ entry.created_at }} {{ entry.category_name }}</h5>
+                <p class="mb-0">{{ entry.address }}</p>
               </div>
             </v-card-title>
           </v-card>
         </v-flex>
         <v-flex xs2 offset-xs2 v-if="entry.debit">
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ entry.amount }}</span>
-            </v-card-title>
-          </v-card>
+          <div class="headline  red--text darken-2  text-xs-right  pr-2">
+            {{ entry.amount }}
+          </div>
         </v-flex>
         <v-flex xs2 v-else>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ entry.amount }}</span>
-            </v-card-title>
-          </v-card>
+          <div class="headline  text-xs-right  pr-2">
+            {{ entry.amount }}
+          </div>
         </v-flex>
       </v-layout>
     </v-flex>

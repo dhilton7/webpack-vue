@@ -14,23 +14,32 @@
     >
       <v-card>
         <v-card-title>
-          <h5 style="display: inline">{{ formAction }}</h5>
+          <h5 class="ml-3 mt-3" style="display: inline">{{ formAction }}</h5>
           <v-btn fab small absolute right top style="margin-right: -35px" @click="hideAddForm">
             <v-icon>delete</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-text-field label="Address" v-model="address"/>
-          <v-text-field label="City" v-model="city"/>
-          <v-text-field label="State" v-model="state"/>
-          <v-text-field label="ZIPCode" v-model="zip"/>
+          <v-layout row>
+            <v-flex xs12 md6 ma-3>
+              <v-text-field label="Address" v-model="address"/>
+              <v-text-field label="City" v-model="city"/>
+            </v-flex>
+            <v-flex xs12 md6 ma-3>
+              <v-text-field label="State" v-model="state"/>
+              <v-text-field label="ZIPCode" v-model="zip"/>
+            </v-flex>
+          </v-layout>
         </v-card-text>
         <v-card-actions>
-          <div v-if="editing">
+          <div v-if="editing" mb-3 class="mb-3">
             <v-btn secondary @click="editProperty">Edit Property</v-btn>
             <v-btn @click="deleteProperty">Delete</v-btn>
           </div>
-          <v-btn primary v-else @click="createProperty">Add Property</v-btn>
+          <div v-else class="mb-4">
+            <v-btn primary class="ml-4" @click="createProperty">Add Property</v-btn>
+            <v-btn color="grey lighten-2" class="ml-2">Cancel</v-btn>
+          </div>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -43,7 +52,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn @click="showEditForm(property, index)">Edit</v-btn>
-          <v-btn @click="showDetails(property)">Details</v-btn>
+          <router-link :to="`properties/${property.id}`">Details</router-link>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -99,6 +108,7 @@
         axios.get('/properties.json')
           .then(function(response) {
             self.properties = response.data.payload.properties
+            console.table(self.properties)
             self.count = response.data.payload.count
           })
           .catch(function(error) {

@@ -20,10 +20,10 @@ import Vuetify from 'vuetify'
 import App from './app.vue'
 import Analyze from '../components/Analyze.vue'
 import Dashboard from '../components/Dashboard.vue'
-import Properties from '../components/Properties.vue'
 import Financials from '../components/financials/Financials.vue'
 import FinancialDetails from '../components/financials/Details.vue'
-
+import Properties from '../components/Properties.vue'
+import PropertyDetail from '../components/PropertyDetail.vue'
 
 Vue.use(Vuetify)
 Vue.use(Vuex)
@@ -34,7 +34,8 @@ const routes = [
   { path: '/properties', component: Properties },
   { path: '/financials', component: Financials },
   { path: '/analyze', component: Analyze },
-  { path: '/financials/:id', component: FinancialDetails }
+  { path: '/financials/:id', component: FinancialDetails },
+  { path: '/properties/:id', component: PropertyDetail }
 ]
 
 const store = new Vuex.Store({

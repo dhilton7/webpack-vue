@@ -17,10 +17,12 @@ class SheetsController < ApplicationController
     @properties = current_user.properties.select('id, address, city, state, zip')
     # TODO: Make this data driven
     @headers = [
-      { name: 'Income', value: '$4000' },
-      { name: 'Expenses', value: '$1600' },
       { name: 'Cashflow', value: '$2400' },
       { name: 'ROI', value: '12%' },
+      { name: 'ROI', value: '12%' },
+      { name: 'ROI', value: '12%' },
+      { name: 'Income', value: '$4000' },
+      { name: 'Expenses', value: '$1600' }
     ]
   end
 

@@ -12,6 +12,7 @@ json.payload do
     json.date entry.date
     json.category_name entry.category_name
     json.address entry.address_string
+    json.created_at entry.created_at.strftime('%D')
   end
   json.headers @headers do |header|
     json.name header[:name]

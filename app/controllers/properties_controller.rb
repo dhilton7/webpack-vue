@@ -2,6 +2,7 @@ class PropertiesController < ApplicationController
   before_action :set_property, only: %i[show update destroy]
 
   def show
+    @entries = Entry.for_property(params[:id])
   end
 
   def index
