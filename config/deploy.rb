@@ -12,6 +12,14 @@ set :keep_releases, 5
 set :rvm_type, :user
 set :rvm_ruby_version, '2.5.0' # Edit this if you are using MRI Ruby
 
+set :nvm_type, :user # or :system, depends on your nvm setup
+set :nvm_node, 'v8.5.0'
+set :nvm_map_bins, %w{node npm yarn}
+set :yarn_target_path, -> { release_path.join('client') } #
+set :yarn_flags, '--production --silent --no-progress' # default
+set :yarn_roles, :all # default
+set :yarn_env_variables, {}
+
 set :puma_rackup, -> { File.join(current_path, 'config.ru') }
 set :puma_state, "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
